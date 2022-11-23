@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri : mongodb+srv://user123:admin@mathscluster.z9hebwa.mongodb.net/?retryWrites=true&w=majority
+      database : Blog
