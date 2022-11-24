@@ -83,8 +83,23 @@ class BlogControllerTest {
     }
 
     @Test
-    void getBlogByTitle() {
+    void getBlogByTitle() throws Exception {
+        //arrange
+        String blogId = UUID.randomUUID().toString().split("-")[0];
+        Blog blog = Blog.builder()
+                .title("My first blog")
+                .content("Hello world")
+                .build();
+        String titleToSearch = "First blog";
+        given(blogService.findBlogByTitle(titleToSearch)).willReturn(blog);
 
+        //act
+        ResultActions response = mockMvc.perform(get("/blogs/title/{title}", titleToSearch));
+
+        //assert
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(blog.getTitle())))
+                .andExpect(jsonPath("$.content", is(blog.getContent())));
     }
 
     @Test
@@ -108,6 +123,7 @@ class BlogControllerTest {
 
     @Test
     void updateBlog() {
+
     }
 
     @Test
