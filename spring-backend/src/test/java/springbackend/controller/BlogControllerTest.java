@@ -1,5 +1,6 @@
 package springbackend.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import springbackend.model.Blog;
 import springbackend.services.BlogService;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -58,8 +60,26 @@ class BlogControllerTest {
                         is(listBlogs.size())));
     }
 
-//    @Test
-//    void shouldCreateBlog() {
-//
-//    }
+    @Test
+    void shouldCreateBlog() throws Exception {
+        //arrange
+        String blogId = UUID.randomUUID().toString().split("-")[0];
+        Blog blog = Blog.builder()
+                .title("My first blog")
+                .content("Hello world")
+                .build();
+        given(blogService.addBlog(any(Blog.class)))
+                .willAnswer((invocation)-> invocation.getArgument(0));
+
+        //act
+        ResultActions response = mockMvc.perform(post("/blogs/create")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(blog)));
+        //assert
+        response.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.title",
+                        is(blog.getTitle())))
+                .andExpect(jsonPath("$.content",
+                        is(blog.getContent())));
+    }
 }
