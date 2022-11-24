@@ -15,24 +15,26 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Blog createBlog(@RequestBody Blog blog){
         return blogService.addBlog(blog);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public List<Blog> getAllBlogs(){
         return blogService.getAllBlogs();
     }
 
-//    @GetMapping
-//    public List<Blog> getBlogByTitle(String title){
-//        return blogService.findBlogByTitle(title);
-//    }
+    @GetMapping("/title/{title}")
+    public List<Blog> getBlogByTitle(@PathVariable String title){
+        return blogService.findBlogByTitle(title);
+    }
 
-    //add get blog by id later
-
+    @GetMapping("/{blogID}")
+    public Blog getBlogByID(@PathVariable String blogID){
+        return blogService.findBlogById(blogID);
+    }
 
     @PutMapping
     public Blog updateBlog(@RequestBody Blog blog){

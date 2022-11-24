@@ -24,6 +24,10 @@ public class BlogService {
         return repository.findAll();
     }
 
+    public Blog findBlogById(String blogID){
+        return repository.findById(blogID).get();
+    }
+
     public List<Blog> findBlogByTitle(String title){
         return repository.findByTitle(title);
     }

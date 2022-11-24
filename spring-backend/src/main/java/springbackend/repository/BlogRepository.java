@@ -7,6 +7,6 @@ import springbackend.model.Blog;
 import java.util.List;
 
 public interface BlogRepository extends MongoRepository<Blog, String> {
-    @Query("{ 'title' : ?0 }")
-    public List<Blog> findByTitle(String Title);
+    // @Query("{ 'title' : ?0 }")
+    List<Blog> findByTitle(String title);
 }
