@@ -1,10 +1,8 @@
 package springbackend.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import springbackend.model.Blog;
 import springbackend.services.BlogService;
-
 
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.mockito.Mockito.when;
 
 @WebMvcTest(BlogController.class)
 class BlogControllerTest {
@@ -81,5 +80,37 @@ class BlogControllerTest {
                         is(blog.getTitle())))
                 .andExpect(jsonPath("$.content",
                         is(blog.getContent())));
+    }
+
+    @Test
+    void getBlogByTitle() {
+
+    }
+
+    @Test
+    void shouldGetBlogByID() throws Exception {
+        //arrange
+        String blogId = UUID.randomUUID().toString().split("-")[0];
+        Blog blog = Blog.builder()
+                .title("My first blog")
+                .content("Hello world")
+                .build();
+        when(blogService.findBlogById(blogId)).thenReturn(Optional.of(blog));
+
+        //act
+        ResultActions response = mockMvc.perform(get("/blogs/{blogId}", blogId));
+
+        //assert
+        response.andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is(blog.getTitle())))
+                .andExpect(jsonPath("$.content", is(blog.getContent())));
+    }
+
+    @Test
+    void updateBlog() {
+    }
+
+    @Test
+    void deleteBlog() {
     }
 }

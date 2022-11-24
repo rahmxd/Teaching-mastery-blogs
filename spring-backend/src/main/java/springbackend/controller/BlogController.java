@@ -7,6 +7,7 @@ import springbackend.model.Blog;
 import springbackend.services.BlogService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/blogs")
@@ -32,7 +33,7 @@ public class BlogController {
     }
 
     @GetMapping("/{blogID}")
-    public Blog getBlogByID(@PathVariable String blogID){
+    public Optional<Blog> getBlogByID(@PathVariable String blogID){
         return blogService.findBlogById(blogID);
     }
 

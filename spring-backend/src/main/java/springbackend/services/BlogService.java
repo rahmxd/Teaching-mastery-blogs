@@ -6,6 +6,7 @@ import springbackend.model.Blog;
 import springbackend.repository.BlogRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +25,8 @@ public class BlogService {
         return repository.findAll();
     }
 
-    public Blog findBlogById(String blogID){
-        return repository.findById(blogID).get();
+    public Optional<Blog> findBlogById(String blogID){
+        return repository.findById(blogID);
     }
 
     public List<Blog> findBlogByTitle(String title){
