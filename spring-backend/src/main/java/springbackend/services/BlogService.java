@@ -42,9 +42,8 @@ public class BlogService {
     }
 
     //deleteBlog
-    public String deleteBlog(String blogID){
+    public void deleteBlog(String blogID){
         repository.deleteById(blogID);
-        return blogID + " blog deleted from feed ";
     }
 
 }

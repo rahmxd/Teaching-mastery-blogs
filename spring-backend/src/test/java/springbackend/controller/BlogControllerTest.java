@@ -122,11 +122,47 @@ class BlogControllerTest {
     }
 
     @Test
-    void updateBlog() {
+    void shouldUpdateBlog() throws Exception {
+        //arrange
+        String blogId = UUID.randomUUID().toString().split("-")[0];
+        Blog savedBlog = Blog.builder()
+                .title("My first blog")
+                .content("Hello world")
+                .build();
 
+        Blog updatedBlog = Blog.builder()
+                .title("What does Mastery involve?")
+                .content("Welcome to my mastery blog...")
+                .build();
+
+        given(blogService.findBlogById(blogId)).willReturn(Optional.of(savedBlog));
+        given(blogService.updateBlog(any(Blog.class)))
+                .willAnswer((invocation)-> invocation.getArgument(0));
+
+        //act
+        ResultActions response = mockMvc.perform(put("/blogs", blogId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updatedBlog)));
+
+        //assert
+        response.andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.title", is(updatedBlog.getTitle())))
+                .andExpect(jsonPath("$.content", is(updatedBlog.getContent())));
     }
 
+    //add testcase for negative scenario in updateBlog method
+
     @Test
-    void deleteBlog() {
+    void deleteBlog() throws Exception {
+        //arrange
+        String blogID = UUID.randomUUID().toString().split("-")[0];
+        willDoNothing().given(blogService).deleteBlog(blogID);
+
+        //act
+        ResultActions response = mockMvc.perform(delete("/blogs/{blogID}", blogID));
+
+        //assert
+        response.andExpect(status().isOk());
     }
 }

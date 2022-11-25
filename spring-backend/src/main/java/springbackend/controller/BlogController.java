@@ -43,7 +43,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/{blogID}")
-    public String deleteBlog(String blogID){
-        return blogService.deleteBlog(blogID);
+    public void deleteBlog(String blogID){
+        blogService.deleteBlog(blogID);
     }
 }
