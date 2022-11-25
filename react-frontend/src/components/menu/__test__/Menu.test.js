@@ -17,18 +17,16 @@ describe("Menu unit tests", () => {
         cleanup();
     })
 
-
     it('should display the Home link', async() => {
         render(<MockMenu/>)
-        const MenuLinkElement = screen.getByText(/Hello/i);
+        const MenuLinkElement = screen.getByText(/Home/i);
         expect(MenuLinkElement).toBeInTheDocument();
     })
-
 
     it('should display the Add Blog link', async() => {
         render(<MockMenu/>)
-        const MenuLinkElement = screen.getByText(/Hello/i);
+        const MenuLinkElement = screen.getByText(/Add Blog/i);
         expect(MenuLinkElement).toBeInTheDocument();
     })
-    
+
 })
