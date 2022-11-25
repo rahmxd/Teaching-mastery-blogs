@@ -28,7 +28,7 @@ public class BlogController {
     }
 
     @GetMapping("/title/{title}")
-    public List<Blog> getBlogByTitle(@PathVariable String title){
+    public Blog getBlogByTitle(@PathVariable String title){
         return blogService.findBlogByTitle(title);
     }
 

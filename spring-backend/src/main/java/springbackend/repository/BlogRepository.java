@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface BlogRepository extends MongoRepository<Blog, String> {
     // @Query("{ 'title' : ?0 }")
-    List<Blog> findByTitle(String title);
+    Blog findByTitle(String title);
 }

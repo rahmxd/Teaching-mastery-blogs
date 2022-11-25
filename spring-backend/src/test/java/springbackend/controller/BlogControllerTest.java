@@ -83,7 +83,7 @@ class BlogControllerTest {
     }
 
     @Test
-    void getBlogByTitle() throws Exception {
+    void shouldGetBlogByTitle() throws Exception {
         //arrange
         String blogId = UUID.randomUUID().toString().split("-")[0];
         Blog blog = Blog.builder()

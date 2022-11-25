@@ -29,7 +29,7 @@ public class BlogService {
         return repository.findById(blogID);
     }
 
-    public List<Blog> findBlogByTitle(String title){
+    public Blog findBlogByTitle(String title){
         return repository.findByTitle(title);
     }
 
