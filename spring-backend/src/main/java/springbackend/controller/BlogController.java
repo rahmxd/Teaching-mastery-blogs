@@ -38,11 +38,13 @@ public class BlogController {
     }
 
     @PutMapping
+    @ResponseStatus(HttpStatus.OK)
     public Blog updateBlog(@RequestBody Blog blog){
         return blogService.updateBlog(blog);
     }
 
     @DeleteMapping("/{blogID}")
+    @ResponseStatus(HttpStatus.OK)
     public void deleteBlog(String blogID){
         blogService.deleteBlog(blogID);
     }
