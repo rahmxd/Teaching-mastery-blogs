@@ -10,30 +10,32 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class BlogService {
-
-    //look to implement with Interface instead
+public class BlogService implements IBlogService{
     @Autowired
     private BlogRepository repository;
 
+    @Override
     public Blog addBlog(Blog blog){
         blog.setBlogID(UUID.randomUUID().toString().split("-")[0]);
         return repository.save(blog);
     }
 
+    @Override
     public List<Blog> getAllBlogs(){
         return repository.findAll();
     }
 
+    @Override
     public Optional<Blog> findBlogById(String blogID){
         return repository.findById(blogID);
     }
 
+    @Override
     public Blog findBlogByTitle(String title){
         return repository.findByTitle(title);
     }
 
-    //update
+    @Override
     public Blog updateBlog(Blog blog){
         Blog existingBlog = repository.findById(blog.getBlogID()).get();
         existingBlog.setContent(blog.getContent());
@@ -41,7 +43,7 @@ public class BlogService {
         return repository.save(existingBlog);
     }
 
-    //deleteBlog
+    @Override
     public void deleteBlog(String blogID){
         repository.deleteById(blogID);
     }
