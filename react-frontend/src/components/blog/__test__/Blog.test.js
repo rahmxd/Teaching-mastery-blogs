@@ -14,7 +14,10 @@ const MockBlog = ({blogData}) => {
 
 describe("Blog unit tests", () => {
     
-    
+    // beforeEach(() => {
+    //     render(<MockBlog blogData={blogData}/>)
+    // })
+
     afterEach(()=>{
         cleanup();
     })
@@ -27,7 +30,6 @@ describe("Blog unit tests", () => {
     })
 
     it('should render the Card Text Content Element with the content of the Blog', async() => {
-        
         render(<MockBlog blogData={blogData}/>)
         const CardTextContentElement = screen.getByText(/blah blah blah/i);
         expect(CardTextContentElement).toBeInTheDocument();
@@ -35,16 +37,15 @@ describe("Blog unit tests", () => {
     })
 
     it('should render the Edit link', async() => {
-        
         render(<MockBlog blogData={blogData}/>)
         const EditLinkElement = screen.getByText(/Edit/i);
         expect(EditLinkElement).toBeInTheDocument();
+        expect(EditLinkElement).toHaveAttribute('href')
     })
 
     it('should render the Delete Button', async() => {
-        
         render(<MockBlog blogData={blogData}/>)
-        const DeleteButtonElement = screen.getByText(/Delete/i);
+        const DeleteButtonElement = screen.getByRole('button', {name: /Delete/i});
         expect(DeleteButtonElement).toBeInTheDocument();
     })
 
